@@ -76,7 +76,7 @@ HttpClient::HttpClient(const string& userAgent)
     curl_easy_setopt(mCurlHandle, CURLOPT_TIMEOUT, mTimeoutSecs);
     curl_easy_setopt(mCurlHandle, CURLOPT_CONNECTTIMEOUT, mTimeoutSecs);
     curl_easy_setopt(mCurlHandle, CURLOPT_NOSIGNAL, 1);
-    curl_easy_setopt(mCurlHandle, CURLOPT_MAXFILESIZE, 5000000);
+    //curl_easy_setopt(mCurlHandle, CURLOPT_MAXFILESIZE, 5000000);
 
     string interfaces = 
 	haveParam("httpclient.interfaces") ?
@@ -239,7 +239,6 @@ HttpClient::httpGet(const string& url, const string& contentType,
     
     string encoding;
     string utf8Body;
-
     
     long tempStatusCode;
     curl_easy_getinfo(mCurlHandle, CURLINFO_RESPONSE_CODE, &tempStatusCode);
@@ -252,10 +251,10 @@ HttpClient::httpGet(const string& url, const string& contentType,
         (type.size() < contentType.size() || 
          type.substr(0, contentType.size()) != contentType))
     {
-        LOG_INFO << "Not saving: Content-Type: " << type 
+        LOG_INFO << "Content type differs: Content-Type: " << type 
                  << " rather than " << contentType;
         mWrongType = true;
-        return false;
+        //return false;
     }
     else
         mWrongType = false;

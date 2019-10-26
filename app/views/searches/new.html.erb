@@ -1,8 +1,9 @@
 <h1>New search</h1>
 
-<% form_for(@search) do |f| %>
-  <%= f.error_messages %>
-
+<%= form_for(@search ) do |f| %>
+  <% @search.errors.full_messages.each do |msg| %>
+    <p><%= msg %></p>
+  <% end %>
 
   <p>
     (G1) Check that sales > 500 mil, and Book > 2.5B
@@ -17,8 +18,31 @@
   </p>
 
   <p>
-    (G2)
-    <%= f.label :good_balance_ratios %><br />
+    Revenue greater than
+    <%= f.label :revenue %><br />
+    <%= f.text_field :revenue %>
+  </p>
+
+  <p>
+    Net Income greater than
+    <%= f.label :net_income %><br />
+    <%= f.text_field :net_income %>
+  </p>
+
+  <p>
+    Margin greater than
+    <%= f.label :margin %><br />
+    <%= f.text_field :margin %>
+  </p>
+
+  <p>
+    Return on Equity greater than
+    <%= f.label :roe %><br />
+    <%= f.text_field :roe %>
+  </p>
+
+  <p>
+    (G2) Good current ration, and managable debt
     <%= f.check_box :good_balance %>
   </p>
 
@@ -62,6 +86,21 @@
     <%= f.label :defensive_price %><br />
     <%= f.check_box :defensive_price %>
   </p>
+
+  <p>
+    <%= f.label :sort_results_by %><br />
+    <%= f.radio_button :sort_by, "pe10", :checked => true %>
+    <%= f.label :sort, "pe10" %>
+    <%= f.radio_button :sort_by, "price_to_limit" %>
+    <%= f.label :sort, "price_to_limit" %>
+    <%= f.radio_button :sort_by, "price_to_book" %>
+    <%= f.label :sort, "price_to_book" %>
+    <%= f.radio_button :sort_by, "market_cap" %>
+    <%= f.label :sort, "market_cap" %>
+    <%= f.radio_button :sort_by, "pe" %>
+    <%= f.label :sort, "pe" %>
+  </p>
+
 
   <p>
     <%= f.submit 'Create' %>

@@ -8,9 +8,9 @@
 #include <sstream>
 #include <boost/filesystem.hpp>
 #include "Identifier.h"
+#include "Dates.hpp"
 
 using namespace std;
-
 
 template<class I>
 void
@@ -75,7 +75,6 @@ toString(const T& t)
 {
     std::ostringstream oss;
     oss << t;
-    
     return oss.str();
 }
 
@@ -287,10 +286,26 @@ join(const std::vector<std::basic_string<T> >& v)
     return ret;
 }
 
+// file writing methods
+void write_to_disk(string& content, string& info, const boost::filesystem::path& writeDest);
+
 std::string firstWord(const std::string& s);
 
 std::string substitute(const std::string& orig, const std::string& cut, 
                        const std::string& paste);
+
+template<class T>
+bool withinPercent(T testV, float p, T val)
+{
+    return ( (testV <= val * 1+p ) && (testV >= val * 1-p ) );
+}
+
+//template bool withinPercent<double>(double,float,double);
+
+std::string removeNonDigit(string& str);
+std::string removeParenthasis(string& str);
+std::string removeleadingComma(string& str);
+
 std::string trimSpaces(const std::string& s);
 
 std::string toLower(const std::string& s);

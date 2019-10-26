@@ -5,14 +5,47 @@
 #include <fstream>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
-#include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
-
+#include <boost/regex.hpp>
 #include "Utils.hpp"
-
 
 using namespace boost::filesystem;
 using namespace boost::algorithm;
+
+/*
+  @content - content of file to create (string)
+  @info - file name (to create)
+  @writedest - destination path 'directory'
+*/
+void
+write_to_disk(string& content, string& info, const path& writeDest)
+{
+//    LOG_INFO << "writing to disk at " << writeDest.string();
+    path dir = writeDest;
+    path filePath = writeDest / info;
+//    LOG_INFO << "Writing to " << filePath;
+    if (!exists(dir)){
+        path partial;
+        for (auto it = dir.begin(); it != dir.end(); ++it){
+//            LOG_INFO << "checking for existance of " << *it;
+            if (*it != "."){
+                partial /= *it;
+                if (!exists(partial)){
+//                    LOG_INFO << "Creating directory " << partial;
+                    create_directory(partial);
+                    //if (!exists(partial))
+//                        LOG_ERROR << "Could not create directory "                                               << partial.string();
+                }
+            }
+        }
+    }
+    cout << "\n File path is: " << filePath << "\n";
+
+    boost::filesystem::ofstream outFile(filePath);
+    outFile << content;
+    outFile.close();
+}
+
 
 string
 pathFrom(const string& full, const string& from)
@@ -56,14 +89,65 @@ string
 loadFileToString(const string& fileName)
 {
     std::ifstream f(fileName.c_str(), ios::binary);
-
     f.seekg(0, ios::end);
     std::ifstream::pos_type filesize = f.tellg();
+    if ( filesize <= 0 )
+    {
+        cout << " Could not load file at " << fileName;
+        return "";
+    }
     f.seekg(0, ios::beg);
-    
     string ret(filesize, 0);
-    f.read(&ret[0], filesize);
 
+    f.read(&ret[0], filesize);
+    return ret;
+}
+
+string
+removeNonDigit(string& str)
+{
+    string ret("");
+    //boost::regex digitPat("\\d");
+
+    for ( auto it = str.begin() ; it != str.end() ; ++it)
+    {
+        if ( ((*it - '0') > 9)   ||
+             ((*it - '0') < 0) )
+            continue;
+        ret += *it;
+    }
+    return ret;
+}
+
+string
+removeParenthasis(string& str)
+{
+    string ret("");
+    for ( auto it = str.begin() ; it != str.end() ; ++it)
+    {
+        if ( (*it == '(' )   ||
+             (*it == ')' )    )
+            continue;
+        ret += *it;
+    }
+    return ret;
+}
+
+string
+removeleadingComma(string& str)
+{
+    string ret("");
+    bool atstart = true;
+    for ( auto it = str.begin() ; it != str.end() ; ++it)
+    {
+        if (atstart){
+        if ( (*it == ' ' )   ||
+             (*it == ':' )    )
+            continue;
+        }
+        atstart = false;
+        ret += *it;
+    }
     return ret;
 }
 

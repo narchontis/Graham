@@ -1,12 +1,13 @@
 Main.o Main.d : main/Main.cpp utils/Identifier.h utils/Config.h utils/Utils.hpp \
- utils/Identifier.h utils/Logger.h utils/Logger.h dmmm/dmmm_dbface.h \
- /usr/include/mysql++/mysql++.h /usr/include/mysql++/connection.h \
- /usr/include/mysql++/common.h /usr/include/mysql/mysql_version.h \
- /usr/include/mysql/mysql.h /usr/include/mysql/mysql_version.h \
- /usr/include/mysql/mysql_com.h /usr/include/mysql/mysql_time.h \
- /usr/include/mysql/my_list.h /usr/include/mysql/typelib.h \
- /usr/include/mysql/my_alloc.h /usr/include/mysql++/noexceptions.h \
- /usr/include/mysql++/options.h /usr/include/mysql++/tcp_connection.h \
+ utils/Identifier.h utils/Dates.hpp utils/Logger.h utils/Logger.h \
+ dmmm/dmmm_dbface.h /usr/include/mysql++/mysql++.h \
+ /usr/include/mysql++/connection.h /usr/include/mysql++/common.h \
+ /usr/include/mysql/mysql_version.h /usr/include/mysql/mysql.h \
+ /usr/include/mysql/mysql_version.h /usr/include/mysql/mysql_com.h \
+ /usr/include/mysql/mysql_time.h /usr/include/mysql/my_list.h \
+ /usr/include/mysql/typelib.h /usr/include/mysql/my_alloc.h \
+ /usr/include/mysql++/noexceptions.h /usr/include/mysql++/options.h \
+ /usr/include/mysql++/tcp_connection.h \
  /usr/include/mysql++/uds_connection.h \
  /usr/include/mysql++/wnp_connection.h /usr/include/mysql++/cpool.h \
  /usr/include/mysql++/beemutex.h /usr/include/mysql++/exceptions.h \
@@ -23,6 +24,18 @@ Main.o Main.d : main/Main.cpp utils/Identifier.h utils/Config.h utils/Utils.hpp 
  /usr/include/mysql++/stream2string.h /usr/include/mysql++/sqlstream.h \
  /usr/include/mysql++/transaction.h /usr/include/mysql++/insertpolicy.h \
  /usr/include/mysql++/scopedconnection.h /usr/include/mysql++/sql_types.h \
- dmmm/dmmm_id.hpp include/Financials.h include/../financials/Financials.h \
- include/HttpClient.h include/../utils/HttpClient.h include/Url.h \
- include/../html/Url.h
+ dmmm/dmmm_id.hpp dmmm/T_Stock.hpp dmmm/O_Stock.hpp dmmm/dmmm_utils.hpp \
+ dmmm/dmmm_dbface.h dmmm/dmmm_identifiers.hpp dmmm/dmmm_fields.hpp \
+ dmmm/dmmm_comparators.hpp dmmm/T_Dividend.hpp dmmm/O_Dividend.hpp \
+ dmmm/T_Note.hpp dmmm/O_Note.hpp dmmm/T_Ep.hpp dmmm/O_Ep.hpp \
+ dmmm/T_Numshare.hpp dmmm/O_Numshare.hpp dmmm/T_BalanceSheet.hpp \
+ dmmm/O_BalanceSheet.hpp dmmm/T_Split.hpp dmmm/O_Split.hpp \
+ dmmm/T_ShareClass.hpp dmmm/O_ShareClass.hpp include/Financials.h \
+ include/../financials/Financials.h include/HttpClient.h \
+ include/../utils/HttpClient.h include/Url.h include/../html/Url.h \
+ dmmm/O_Stock.hpp include/info.h include/../financials/Info.h \
+ utils/Dates.hpp include/types.h include/../parser/types.h \
+ include/Parser.h include/../parser/Parser.h dmmm/O_Ep.hpp \
+ include/../parser/types.h include/../parser/Tokenizer.h include/Test.h \
+ include/../utils/Test.h include/Tokenizer.h \
+ include/../parser/Tokenizer.h

@@ -4,10 +4,32 @@
 #include "dmmm_id.hpp"
 
 namespace DMMM {
-class DummyO_Fight;
-typedef ID::Id<DummyO_Fight> I_Fight;
-class DummyO_Fighter;
-typedef ID::Id<DummyO_Fighter> I_Fighter;
+class DummyO_BalanceSheet;
+typedef ID::Id<DummyO_BalanceSheet> I_BalanceSheet;
+class DummyO_Dividend;
+typedef ID::Id<DummyO_Dividend> I_Dividend;
+class DummyO_Ep;
+typedef ID::Id<DummyO_Ep> I_Ep;
+class DummyO_Note;
+typedef ID::Id<DummyO_Note> I_Note;
+class DummyO_Numshare;
+typedef ID::Id<DummyO_Numshare> I_Numshare;
+class DummyO_Search;
+typedef ID::Id<DummyO_Search> I_Search;
+class DummyO_Sector;
+typedef ID::Id<DummyO_Sector> I_Sector;
+class DummyO_ShareClass;
+typedef ID::Id<DummyO_ShareClass> I_ShareClass;
+class DummyO_SpEarning;
+typedef ID::Id<DummyO_SpEarning> I_SpEarning;
+class DummyO_Split;
+typedef ID::Id<DummyO_Split> I_Split;
+class DummyO_Stock;
+typedef ID::Id<DummyO_Stock> I_Stock;
+class DummyO_SubSector;
+typedef ID::Id<DummyO_SubSector> I_SubSector;
+class DummyO_User;
+typedef ID::Id<DummyO_User> I_User;
 
 } //namespace DMMM
 #endif //DMMM_IDENTIFIERS_HPP

@@ -27,6 +27,12 @@ DBFace::DBFace(const string& database, const string& host,
     connect();
 }
 
+bool 
+DBFace::switchDB(std::string& dbName)
+{
+    return _connection.select_db(dbName);
+}
+
 void
 DBFace::connect()
 {
@@ -113,10 +119,17 @@ DBFace::select(const vector<string>& tables,
     }
     
     for (size_t i = 0; i < mysqlRes.num_rows(); ++i){
-	rRes.resize(rRes.size() + 1);
-	for (size_t j = 0; j < columns.size(); ++j)
-	    if (!mysqlRes[i][columns[j].c_str()].is_null())
- 	        rRes.back()[columns[j]] = UTILS::toString(mysqlRes[i][columns[j].c_str()]);
+        rRes.resize(rRes.size() + 1);
+
+        for (size_t j = 0; j < columns.size(); ++j){
+            // needed for handling enum values:
+            string rescolname = columns[j];
+            if (rescolname.substr(rescolname.length()-2,2) == "+0")
+                rescolname = tables[0]+"."+rescolname;
+
+            if (!mysqlRes[i][rescolname.c_str()].is_null())
+                rRes.back()[columns[j]] = UTILS::toString(mysqlRes[i][rescolname.c_str()]);
+        }
     }
     return true;
 }
@@ -173,6 +186,19 @@ DBFace::erase(const vector<string>& tables,
     
 }
 
+bool 
+DBFace::erase(const std::string& table, 
+              const std::string& where)
+{
+    Query q = _connection.query();
+    q << "DELETE FROM " << table;
+    if (where.size())
+	q << " WHERE " << where;
+    log(q.str());
+    boost::mutex::scoped_lock lock(_mutex);
+    return executeQuery(q);
+}
+    
 
 bool
 DBFace::executeQuery(Query& q)
@@ -310,6 +336,25 @@ DBFace::now()
     }
     return UTILS::toString(mysqlRes[0]["now()"]);
 }
+
+string 
+DBFace::getDBName()
+{
+    boost::mutex::scoped_lock lock(_mutex);
+    Query q = _connection.query();
+    q << "SELECT DATABASE()";
+    log(q.str());
+    StoreQueryResult mysqlRes;
+    try{
+	mysqlRes = q.store();
+    }
+    catch (const mysqlpp::Exception& er) {
+        cerr << "Query failed: " << q << endl << er.what();
+        return string();
+    }
+    return UTILS::toString(mysqlRes[0]["database()"]);
+}
+
 
 string
 sanitize(const string& s)

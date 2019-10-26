@@ -1,0 +1,79 @@
+%ul.list-group
+  %li.list-group-item.row.list-group-item-info.bold
+    Graham financials
+  %li.list-group-item.row
+    %div.col-md-5
+      Big Enough?
+    %span.bold.col-md-2
+      - @yn = @stock.big_enough?
+      = render 'yes_no'
+  %li.list-group-item.row
+    %div.col-md-5
+      Good Balance Ratios?
+    %span.bold.col-md-2
+      - @yn = @stock.financialy_strong?
+      = render 'yes_no'
+    %div.col-md-5
+      - if !@stock.has_currant_ratio
+        = "*Using TOTAL ratios."
+      link to  
+      = link_to "Balance sheet", "http://investing.money.msn.com/investments/stock-balance-sheet/?symbol=us%3A#{@stock.ticker}&stmtView=Ann"
+  %li.list-group-item.row
+    %div.col-md-5
+      No earnings dificet?
+    %span.bold.col-md-2
+      - @yn = @stock.no_earnings_deficit?
+      = render 'yes_no'
+    %div.col-md-5
+      = "in past #{[10,@stock.annual_eps_newest_first.size].min} years"
+  %li.list-group-item.row
+    %div.col-md-5
+      Dividend record 
+    %span.bold.col-md-2
+      - @yn = (!@stock.dividends.empty? && @stock.continous_dividend_record?)
+      = render 'yes_no'
+    %div.col-md-5
+      - if @yn
+        link to
+        = link_to "Dividends", @stock.dividend_url
+      - else
+        - @yn = @stock.pays_dividends 
+        Current divs?
+        = render 'yes_no'
+        - if @yn
+          link to
+          = link_to "Dividends", @stock.dividend_url
+  %li.list-group-item.row
+    %div.col-md-5
+      Earnings growth
+    %span.bold.col-md-2
+      - @yn = @stock.eps_growth?
+      = render 'yes_no' 
+  %li.list-group-item.row
+    %div.col-md-5
+      Cheap?
+    - if @stock.price_limit >= 0
+      %span.bold.col-md-2
+        - @yn = @stock.cheap?
+        = render 'yes_no'
+      %div.col-md-5
+        - if @stock.overpriced?
+          = " #{@stock.ticker} Is OVERPRICED, might consider selling:"
+        - if @stock.bargain?
+          = "At that price, #{@stock.ticker} is a bargain!"
+    - else
+      %div.col-md-7
+        To many losses to recomend a buying price limit
+  %li.list-group-item.row 
+    %div.col-md-9
+      = "#{@stock.ticker} has a defensive limit BUY PRICE of"
+    %div.col-md-3
+      = short_float(@stock.price_limit)
+    %div.col-md-9
+      is TRADING at
+    %div.col-md-3
+      = @stock.price
+    %div.col-md-9
+      and is OVERVALUED at 
+    %div.col-md-3
+      =h "%5.2f" % @stock.valuation_limit 

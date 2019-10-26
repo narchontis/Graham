@@ -1,0 +1,26 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+@media (min-width: 768px) { .container { max-width: 1060px; } }
+
+.list-group-item-info{
+  height: 55px;  
+}
+
+.red{
+  color: red;
+  font-weight: bold;
+}
+.green{
+  color: green;
+  font-weight: bold;
+}
+
+.bold{
+   font-weight: bolder;
+}
+
+.small-italic{
+   font-style: italic;     
+   font-size: 1em;
+}

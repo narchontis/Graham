@@ -43,10 +43,14 @@ public:
 		QueryRes& rRes);
     bool erase(const std::vector<std::string>& table, 
 	       const std::string& where);
+    bool erase(const std::string& table, 
+	       const std::string& where);
     size_t count(const std::vector<std::string>& tables, 
                  const std::string& where);
 
     std::string now(); 
+    std::string getDBName();
+    bool switchDB(std::string& dbName);
 
     void startTransaction();
     void commitTransaction();
